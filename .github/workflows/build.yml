@@ -16,8 +16,10 @@ jobs:
       - name: Test
         run: |
           echo "@agogpixel:registry=https://npm.pkg.github.com" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHP_TOKEN }}" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=$GHP_TOKEN" >> .npmrc
           npm install
+        env:
+          GHP_TOKEN: ${{ secrets.GHP_TOKEN }}
         shell: bash
       #- name: Setup Dependencies
       #  uses: ./.github/actions/setup-dependencies

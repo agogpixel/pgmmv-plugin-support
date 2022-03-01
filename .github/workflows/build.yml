@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Test
+        run: echo "//npm.pkg.github.com/:_authToken=$GITHUB_PAT" >> .npmrc
+        shell: bash
       - name: Setup Dependencies
         uses: ./.github/actions/setup-dependencies
         with:

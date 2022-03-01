@@ -14,7 +14,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Test
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHP_TOKEN }}" >> .npmrc
+        run: |
+          echo "@agogpixel:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHP_TOKEN }}" >> .npmrc
         shell: bash
       - name: Setup Dependencies
         uses: ./.github/actions/setup-dependencies

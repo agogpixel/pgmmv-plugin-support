@@ -22,7 +22,6 @@ runs:
         node-version: '${{ inputs.node-version }}'
         registry-url: '${{ inputs.registry-url }}'
         scope: '${{ inputs.scope }}'
-        always-auth: true
     - name: Install NPM Packages
       run: npm install
       shell: bash

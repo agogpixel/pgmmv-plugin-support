@@ -3,7 +3,7 @@
     "commands": [
       {
         "name": "eslint",
-        "targets": ["api"],
+        "targets": ["src"],
         "test": "npx --no-install --quiet eslint",
         "fix": "npx --no-install --quiet eslint --fix"
       },

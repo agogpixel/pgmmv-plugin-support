@@ -13,20 +13,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Test
-        run: |
-          echo "@agogpixel:registry=https://npm.pkg.github.com" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=$GHP_TOKEN" >> .npmrc
-          npm install
+      #        run: |
+      #          echo "@agogpixel:registry=https://npm.pkg.github.com" >> .npmrc
+      #          echo "//npm.pkg.github.com/:_authToken=$GHP_TOKEN" >> .npmrc
+      #          npm install
+      #        env:
+      #          GHP_TOKEN: ${{ secrets.GHP_TOKEN }}
+      #        shell: bash
+      - name: Setup Dependencies
+        uses: ./.github/actions/setup-dependencies
+        with:
+          registry-url: https://npm.pkg.github.com
         env:
-          GHP_TOKEN: ${{ secrets.GHP_TOKEN }}
-        shell: bash
-      #- name: Setup Dependencies
-      #  uses: ./.github/actions/setup-dependencies
-      #  with:
-      #    registry-url: https://npm.pkg.github.com
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
       - name: Lint
         run: npm run lint
         shell: bash

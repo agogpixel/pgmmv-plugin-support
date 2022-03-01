@@ -17,13 +17,14 @@ jobs:
         run: |
           echo "@agogpixel:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHP_TOKEN }}" >> .npmrc
+          npm install
         shell: bash
-      - name: Setup Dependencies
-        uses: ./.github/actions/setup-dependencies
-        with:
-          registry-url: https://npm.pkg.github.com
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
+      #- name: Setup Dependencies
+      #  uses: ./.github/actions/setup-dependencies
+      #  with:
+      #    registry-url: https://npm.pkg.github.com
+      #  env:
+      #    NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
       - name: Lint
         run: npm run lint
         shell: bash

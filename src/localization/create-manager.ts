@@ -1,4 +1,4 @@
-import { AgtkPluginUiParameterType } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
+import { AgtkPluginUiParameterType } from '@agogpixel/pgmmv-ts/api/agtk/plugin/plugin-ui-parameter-type';
 
 import type { PluginLocalization } from './localization';
 import type { PluginLocalizationData } from './data';

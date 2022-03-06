@@ -149,7 +149,7 @@ export function createPlugin<
    * @returns
    */
   internalApi.inPlayer = function inPlayer() {
-    return Agtk && typeof Agtk.version === 'string' && /^player .+$/.test(Agtk.version);
+    return !!Agtk && typeof Agtk.version === 'string' && /^player .+$/.test(Agtk.version);
   };
 
   /**

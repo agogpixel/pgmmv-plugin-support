@@ -1,9 +1,9 @@
 {
   "name": "@agogpixel/pgmmv-plugin-support",
   "description": "Implementation support for Pixel Game Maker MV plugins.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "author": "kidthales <kidthales@agogpixel.com>",
-  "version": "0.2.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/agogpixel/pgmmv-plugin-support"
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@agogpixel/cavy": "~0.1.1",
-    "@agogpixel/pgmmv-ts": "0.1.1--dev-build-1646596484",
+    "@agogpixel/pgmmv-ts": "~0.1.1",
     "@types/jest": "~27.4.1",
     "@types/node": "~14.17.34",
     "@typescript-eslint/eslint-plugin": "~5.13.0",

@@ -8,4 +8,10 @@
 
 <hr>
 
+> ⚠️ INITIAL DEVELOPMENT ⚠️
+
 Implementation support for Pixel Game Maker MV plugins.
+
+## License
+
+Licensed under the [MIT License](./LICENSE).

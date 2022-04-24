@@ -78,13 +78,11 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
    * @returns
    */
   self.setLocale = function setLocale(locale) {
-    const loca = locale.substring(0, 2);
-
-    if (!localeMap[loca]) {
+    if (!localeMap[locale.substring(0, 2)]) {
       return false;
     }
 
-    currentLocale = loca;
+    currentLocale = locale;
     return true;
   };
 

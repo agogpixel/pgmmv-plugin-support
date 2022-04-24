@@ -53,8 +53,10 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
    * @returns
    */
   self.get = function get(key) {
-    if (localeMap[currentLocale] && typeof localeMap[currentLocale][key] === 'string') {
-      return localeMap[currentLocale][key];
+    const loca = currentLocale.substring(0, 2);
+
+    if (localeMap[loca] && typeof localeMap[loca][key] === 'string') {
+      return localeMap[loca][key];
     }
 
     if (typeof fallbackData[key] === 'string') {

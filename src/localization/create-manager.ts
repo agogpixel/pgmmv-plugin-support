@@ -78,7 +78,7 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
    * @returns
    */
   self.setLocale = function setLocale(locale) {
-    if (!!localeMap[locale]) {
+    if (!!localeMap[locale.substring(0, 2)]) {
       return false;
     }
 

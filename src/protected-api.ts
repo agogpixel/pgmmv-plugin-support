@@ -1,6 +1,8 @@
 import type {
   AgtkPluginActionCommand,
+  AgtkPluginInfoCategory,
   AgtkPluginLinkCondition,
+  AgtkPluginParameterValue,
   AgtkPluginUiParameter
 } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
 import type { JsonValue } from '@agogpixel/pgmmv-ts/api/types';
@@ -48,6 +50,16 @@ export interface PluginProtectedApi<I extends JsonValue = JsonValue> {
 
   /**
    *
+   * @param parameters
+   * @param id
+   */
+  getParameterValueById<T extends JsonValue = JsonValue>(
+    parameters: AgtkPluginParameterValue[],
+    id: number
+  ): T | undefined;
+
+  /**
+   *
    */
   inEditor(): boolean;
 
@@ -55,4 +67,20 @@ export interface PluginProtectedApi<I extends JsonValue = JsonValue> {
    *
    */
   inPlayer(): boolean;
+
+  /**
+   *
+   * @param directive
+   * @param directiveIndex
+   * @param parameters
+   */
+  populateParameterDefaults(
+    directive:
+      | AgtkPluginInfoCategory.ActionCommand
+      | AgtkPluginInfoCategory.AutoTile
+      | AgtkPluginInfoCategory.LinkCondition
+      | AgtkPluginInfoCategory.Parameter,
+    directiveIndex: number,
+    target: AgtkPluginParameterValue[]
+  ): AgtkPluginParameterValue[];
 }

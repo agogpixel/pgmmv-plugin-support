@@ -8,7 +8,7 @@ import type {
   AgtkPluginLinkCondition,
   AgtkPluginUiParameter
 } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
-import { AgtkPluginInfoCategory } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
+import { AgtkPluginInfoCategory, AgtkPluginParameterValue } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
 import type { JsonValue } from '@agogpixel/pgmmv-ts/api/types';
 
 import type { PluginConfig } from './config';
@@ -138,6 +138,23 @@ export function createPlugin<
 
   /**
    *
+   * @param parameters
+   * @param id
+   * @returns
+   */
+  internalApi.getParameterValueById = function getParameterValueById<T extends JsonValue = JsonValue>(
+    parameters: AgtkPluginParameterValue[],
+    id: number
+  ) {
+    for (let i = 0; i < parameters.length; i++) {
+      if (parameters[i].id === id) {
+        return parameters[i].value as T;
+      }
+    }
+  };
+
+  /**
+   *
    * @returns
    */
   internalApi.inEditor = function inEditor() {
@@ -150,6 +167,38 @@ export function createPlugin<
    */
   internalApi.inPlayer = function inPlayer() {
     return !!Agtk && typeof Agtk.version === 'string' && /^player .+$/.test(Agtk.version);
+  };
+
+  /**
+   *
+   * @param directive
+   * @param directiveIndex
+   * @param target
+   * @returns
+   */
+  internalApi.populateParameterDefaults = function populateParameterDefaults(directive, directiveIndex, target) {
+    const vj = (self.getInfo(directive) as { parameter: AgtkPluginUiParameter[] }[])[directiveIndex];
+    const parameter = vj.parameter;
+
+    if (!!parameter) {
+      for (let i = 0; i < parameter.length; i++) {
+        const id = parameter[i].id;
+        let found = false;
+
+        for (let j = 0; j < target.length; j++) {
+          if (target[j].id == id) {
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          target.push({ id: id, value: parameter[i].defaultValue as JsonValue });
+        }
+      }
+    }
+
+    return target;
   };
 
   /**

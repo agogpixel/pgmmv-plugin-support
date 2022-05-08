@@ -1,39 +1,77 @@
+/**
+ * Exports plugin localization manager factory.
+ *
+ * @module localization/create-plugin-localization-manager.function
+ */
 import { AgtkPluginUiParameterType } from '@agogpixel/pgmmv-ts/api/agtk/plugin/plugin-ui-parameter-type';
 
-import type { PluginLocalization } from './localization';
-import type { PluginLocalizationData } from './data';
-import type { PluginLocalizationManager } from './manager';
-import type { PluginLocalizationManagerConfig } from './manager-config';
+import type { PluginLocalizationData } from './plugin-localization-data.type';
+import type { PluginLocalizationManagerConfig } from './plugin-localization-manager-config.interface';
+import type { PluginLocalizationManager } from './plugin-localization-manager.interface';
+import type { PluginLocalization } from './plugin-localization.interface';
+
+////////////////////////////////////////////////////////////////////////////////
+// Public Static Properties
+////////////////////////////////////////////////////////////////////////////////
+
+// None.
+
+////////////////////////////////////////////////////////////////////////////////
+// Private Static Properties
+////////////////////////////////////////////////////////////////////////////////
+
+// None.
+
+////////////////////////////////////////////////////////////////////////////////
+// Public Static Methods
+////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Create an object instance that provides an implementation for a plugin
+ * localization manager.
  *
- * @param config
- * @returns
+ * @param config Plugin localization manager configuration.
+ * @returns An object instance that provides an implementation for a plugin
+ * localization manager.
+ * @public
+ * @static
  */
 export function createPluginLocalizationManager(config: PluginLocalizationManagerConfig) {
-  /**
-   *
-   */
+  // Public API container.
   const self = {} as PluginLocalizationManager;
 
-  // Resolve configuration.
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Properties
+  //////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * Localization configurations.
+   *
+   * @private
+   */
   const localizations =
     config.localizations && config.localizations.length > 0
       ? config.localizations
       : ([{ locale: 'en', data: {} }] as PluginLocalization[]);
 
   /**
+   * Localization fallback data.
    *
+   * @private
    */
   const fallbackData = localizations[0].data;
 
   /**
+   * Current locale.
    *
+   * @private
    */
   let currentLocale = localizations[0].locale;
 
   /**
+   * Maps locale prefix to localization data.
    *
+   * @private
    */
   const localeMap = {} as Record<string, PluginLocalizationData>;
 
@@ -43,16 +81,41 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
   }
 
   /**
+   * Inline locale regex for text replacement.
    *
+   * @private
    */
   const inlineRegex = /^loca\((.+)\)$/;
 
-  /**
-   *
-   * @param key
-   * @returns
-   */
-  self.get = function get(key) {
+  //////////////////////////////////////////////////////////////////////////////
+  // Private Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  // None.
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Protected Properties
+  //////////////////////////////////////////////////////////////////////////////
+
+  // None.
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Protected Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  // None.
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Public Properties
+  //////////////////////////////////////////////////////////////////////////////
+
+  // None.
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Public Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  self.get = function (key) {
     const loca = currentLocale.substring(0, 2);
 
     if (localeMap[loca] && typeof localeMap[loca][key] === 'string') {
@@ -66,20 +129,11 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
     return `LOCA MISSING: ${key}`;
   };
 
-  /**
-   *
-   * @returns
-   */
-  self.getLocale = function getLocale() {
+  self.getLocale = function () {
     return currentLocale;
   };
 
-  /**
-   *
-   * @param locale
-   * @returns
-   */
-  self.setLocale = function setLocale(locale) {
+  self.setLocale = function (locale) {
     if (!localeMap[locale.substring(0, 2)]) {
       return false;
     }
@@ -88,12 +142,7 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
     return true;
   };
 
-  /**
-   *
-   * @param parameters
-   * @returns
-   */
-  self.processParameterLocale = function processParameterLocale(parameters) {
+  self.processParameterLocale = function (parameters) {
     for (let i = 0; i < parameters.length; ++i) {
       const parameter = parameters[i];
       let matches = parameter.name.match(inlineRegex);
@@ -132,12 +181,7 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
     return parameters;
   };
 
-  /**
-   *
-   * @param executeCommands
-   * @returns
-   */
-  self.processExecuteCommandLocale = function processExecuteCommandLocale(executeCommands) {
+  self.processExecuteCommandLocale = function (executeCommands) {
     for (let i = 0; i < executeCommands.length; ++i) {
       const executeCommand = executeCommands[i];
       let matches = executeCommand.name.match(inlineRegex);
@@ -158,12 +202,7 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
     return executeCommands;
   };
 
-  /**
-   *
-   * @param linkConditions
-   * @returns
-   */
-  self.processLinkConditionLocale = function processLinkConditionLocale(linkConditions) {
+  self.processLinkConditionLocale = function (linkConditions) {
     for (let i = 0; i < linkConditions.length; ++i) {
       const linkCondition = linkConditions[i];
       let matches = linkCondition.name.match(inlineRegex);
@@ -186,3 +225,9 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
 
   return self;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Private Static Methods
+////////////////////////////////////////////////////////////////////////////////
+
+// None.

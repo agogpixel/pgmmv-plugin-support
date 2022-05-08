@@ -1,8 +1,8 @@
-import { AgtkPlugin, AgtkPluginInfoCategory } from '@agogpixel/pgmmv-ts/api';
+import { AgtkPlugin, AgtkPluginInfoCategory } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
 
-import { createPlugin } from './create-plugin';
+import { createPlugin } from './create-plugin.function';
 import { PluginLocalizationRequiredKey } from './localization';
-import { PluginProtectedApi } from './protected-api';
+import type { PluginProtectedApi } from './plugin-protected-api.interface';
 
 describe('createPlugin', () => {
   it('is a function', () => expect(typeof createPlugin).toBe('function'));

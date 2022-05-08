@@ -1,0 +1,5 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src/localization", "./src"],
+  "out": "dist/docs"
+}

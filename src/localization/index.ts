@@ -1,6 +1,11 @@
-export * from './create-manager';
-export * from './localization';
-export * from './data';
-export * from './manager';
-export * from './manager-config';
-export * from './required-key';
+/**
+ * Exports PGMMV plugin support localization APIs and implementations.
+ *
+ * @module localization
+ */
+export * from './create-plugin-localization-manager.function';
+export * from './plugin-localization-data.type';
+export * from './plugin-localization-manager-config.interface';
+export * from './plugin-localization-manager.interface';
+export * from './plugin-localization-required-key.enum';
+export * from './plugin-localization.interface';

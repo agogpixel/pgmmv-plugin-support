@@ -278,23 +278,14 @@ export function createPlugin<
 function normalizeParameters(paramValue: AgtkPluginParameterValue[], defaults: AgtkPluginUiParameter[]) {
   const normalized: Record<number, JsonValue> = {};
 
-  if (!!defaults) {
-    for (let i = 0; i < defaults.length; i++) {
-      const id = defaults[i].id;
-      let found = false;
+  for (let i = 0; i < defaults.length; i++) {
+    const p = defaults[i];
+    normalized[p.id] = p.defaultValue as JsonValue;
+  }
 
-      for (let j = 0; j < paramValue.length; j++) {
-        if (paramValue[j].id === id) {
-          found = true;
-          normalized[id] = paramValue[j].value;
-          break;
-        }
-      }
-
-      if (!found) {
-        normalized[id] = defaults[i].defaultValue as JsonValue;
-      }
-    }
+  for (let i = 0; i < paramValue.length; ++i) {
+    const p = paramValue[i];
+    normalized[p.id] = p.value;
   }
 
   return normalized;

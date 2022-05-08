@@ -275,6 +275,15 @@ export function createPlugin<
 // Private Static Methods
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Normalize plugin UI paramters.
+ *
+ * @param paramValue Plugin UI parameter values.
+ * @param defaults Default plugin UI parameters.
+ * @returns Normalized plugin UI parameters.
+ * @private
+ * @static
+ */
 function normalizeParameters(paramValue: AgtkPluginParameterValue[], defaults: AgtkPluginUiParameter[]) {
   const normalized: Record<number, JsonValue> = {};
 

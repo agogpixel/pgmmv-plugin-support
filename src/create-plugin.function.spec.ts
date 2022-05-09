@@ -1,8 +1,8 @@
-import { AgtkPlugin, AgtkPluginInfoCategory } from '@agogpixel/pgmmv-ts/api';
+import { AgtkPlugin, AgtkPluginInfoCategory, AgtkPluginUiParameterType } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
 
-import { createPlugin } from './create-plugin';
+import { createPlugin } from './create-plugin.function';
 import { PluginLocalizationRequiredKey } from './localization';
-import { PluginProtectedApi } from './protected-api';
+import type { PluginProtectedApi } from './plugin-protected-api.interface';
 
 describe('createPlugin', () => {
   it('is a function', () => expect(typeof createPlugin).toBe('function'));
@@ -145,7 +145,74 @@ describe('createPlugin', () => {
 
     beforeEach(() => {
       pluginInternal = {} as PluginProtectedApi;
-      createPlugin({ localizations: [] }, pluginInternal);
+      createPlugin(
+        {
+          localizations: [],
+          parameters: [
+            {
+              id: 1,
+              name: 'testPluginParameter1',
+              type: AgtkPluginUiParameterType.TextId,
+              defaultValue: -1,
+              withNewButton: true
+            },
+            {
+              id: 2,
+              name: 'testPluginParameter2',
+              type: AgtkPluginUiParameterType.TextId,
+              defaultValue: -2,
+              withNewButton: true
+            }
+          ],
+          actionCommands: [
+            {
+              id: 1,
+              name: 'testActionCommand1',
+              description: 'testActionCommand1',
+              parameter: [
+                {
+                  id: 1,
+                  name: 'testActionCommandParameter1',
+                  type: AgtkPluginUiParameterType.TextId,
+                  defaultValue: -1,
+                  withNewButton: true
+                },
+                {
+                  id: 2,
+                  name: 'testActionCommandParameter2',
+                  type: AgtkPluginUiParameterType.TextId,
+                  defaultValue: -2,
+                  withNewButton: true
+                }
+              ]
+            }
+          ],
+          linkConditions: [
+            {
+              id: 1,
+              name: 'testLinkCondition1',
+              description: 'testLinkCondition1',
+              parameter: [
+                {
+                  id: 1,
+                  name: 'testLinkConditionParameter1',
+                  type: AgtkPluginUiParameterType.TextId,
+                  defaultValue: -1,
+                  withNewButton: true
+                },
+                {
+                  id: 2,
+                  name: 'testLinkConditionParameter2',
+                  type: AgtkPluginUiParameterType.TextId,
+                  defaultValue: -2,
+                  withNewButton: true
+                }
+              ]
+            }
+          ]
+        },
+        pluginInternal
+      );
     });
 
     describe('internalApi', () => {
@@ -194,6 +261,93 @@ describe('createPlugin', () => {
           (global as unknown as Record<string, unknown>)['Agtk'] = { version: 'player testing' };
           expect(pluginInternal.inPlayer()).toBe(true);
           delete (global as unknown as Record<string, unknown>)['Agtk'];
+        });
+      });
+
+      describe('normalizeActionCommandParameters', () => {
+        it('has method', () => expect(typeof pluginInternal.normalizeActionCommandParameters).toBe('function'));
+
+        it('normalizes to an object & sets missing parameters with default values', () => {
+          let result = pluginInternal.normalizeActionCommandParameters(0, []);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(-1);
+          expect(result[2]).toEqual(-2);
+
+          result = pluginInternal.normalizeActionCommandParameters(0, [{ id: 1, value: 1 }]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(1);
+          expect(result[2]).toEqual(-2);
+
+          result = pluginInternal.normalizeActionCommandParameters(0, [{ id: 2, value: 2 }]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(-1);
+          expect(result[2]).toEqual(2);
+
+          result = pluginInternal.normalizeActionCommandParameters(0, [
+            { id: 1, value: 1 },
+            { id: 2, value: 2 }
+          ]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(1);
+          expect(result[2]).toEqual(2);
+        });
+      });
+
+      describe('normalizeLinkConditionParameters', () => {
+        it('has method', () => expect(typeof pluginInternal.normalizeLinkConditionParameters).toBe('function'));
+
+        it('normalizes to an object & sets missing parameters with default values', () => {
+          let result = pluginInternal.normalizeLinkConditionParameters(0, []);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(-1);
+          expect(result[2]).toEqual(-2);
+
+          result = pluginInternal.normalizeLinkConditionParameters(0, [{ id: 1, value: 1 }]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(1);
+          expect(result[2]).toEqual(-2);
+
+          result = pluginInternal.normalizeLinkConditionParameters(0, [{ id: 2, value: 2 }]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(-1);
+          expect(result[2]).toEqual(2);
+
+          result = pluginInternal.normalizeLinkConditionParameters(0, [
+            { id: 1, value: 1 },
+            { id: 2, value: 2 }
+          ]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(1);
+          expect(result[2]).toEqual(2);
+        });
+      });
+
+      describe('normalizeUiParameters', () => {
+        it('has method', () => expect(typeof pluginInternal.normalizeUiParameters).toBe('function'));
+
+        it('normalizes to an object & sets missing parameters with default values', () => {
+          let result = pluginInternal.normalizeUiParameters([]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(-1);
+          expect(result[2]).toEqual(-2);
+
+          result = pluginInternal.normalizeUiParameters([{ id: 1, value: 1 }]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(1);
+          expect(result[2]).toEqual(-2);
+
+          result = pluginInternal.normalizeUiParameters([{ id: 2, value: 2 }]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(-1);
+          expect(result[2]).toEqual(2);
+
+          result = pluginInternal.normalizeUiParameters([
+            { id: 1, value: 1 },
+            { id: 2, value: 2 }
+          ]);
+          expect(Object.keys(result).length).toEqual(2);
+          expect(result[1]).toEqual(1);
+          expect(result[2]).toEqual(2);
         });
       });
     });

@@ -181,9 +181,9 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
     return parameters;
   };
 
-  self.processExecuteCommandLocale = function (executeCommands) {
-    for (let i = 0; i < executeCommands.length; ++i) {
-      const executeCommand = executeCommands[i];
+  self.processActionCommandLocale = function (actionCommands) {
+    for (let i = 0; i < actionCommands.length; ++i) {
+      const executeCommand = actionCommands[i];
       let matches = executeCommand.name.match(inlineRegex);
 
       if (matches && matches.length > 1) {
@@ -199,7 +199,7 @@ export function createPluginLocalizationManager(config: PluginLocalizationManage
       self.processParameterLocale(executeCommand.parameter);
     }
 
-    return executeCommands;
+    return actionCommands;
   };
 
   self.processLinkConditionLocale = function (linkConditions) {

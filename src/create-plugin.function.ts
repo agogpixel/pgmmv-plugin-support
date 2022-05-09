@@ -149,7 +149,7 @@ export function createPlugin<
 
   internalApi.getInfoActionCommand = function () {
     if (!localizedActionCommands) {
-      localizedActionCommands = internalApi.localization.processExecuteCommandLocale(actionCommandsConfig);
+      localizedActionCommands = internalApi.localization.processActionCommandLocale(actionCommandsConfig);
     }
 
     return localizedActionCommands;

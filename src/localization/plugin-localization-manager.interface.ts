@@ -51,11 +51,11 @@ export interface PluginLocalizationManager {
   /**
    * Process plugin action command inline localization text functions.
    *
-   * @param executeCommands Plugin action commands.
+   * @param actionCommands Plugin action commands.
    * @returns Localized plugin action commands.
    * @public
    */
-  processExecuteCommandLocale(executeCommands: AgtkPluginActionCommand[]): AgtkPluginActionCommand[];
+  processActionCommandLocale(actionCommands: AgtkPluginActionCommand[]): AgtkPluginActionCommand[];
 
   /**
    * Process plugin link condition inline localization text functions.

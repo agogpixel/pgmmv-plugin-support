@@ -15,6 +15,7 @@ import type {
 } from '@agogpixel/pgmmv-ts/api/agtk/plugin';
 import { AgtkPluginInfoCategory } from '@agogpixel/pgmmv-ts/api/agtk/plugin/plugin-info-category';
 import { AgtkPluginParameterValue } from '@agogpixel/pgmmv-ts/api/agtk/plugin/plugin-parameter-value';
+import { AgtkPluginUiParameterType } from '@agogpixel/pgmmv-ts/api/agtk/plugin/plugin-ui-parameter-type';
 import type { JsonValue } from '@agogpixel/pgmmv-ts/api/types/json';
 
 import { createPluginLocalizationManager, PluginLocalizationRequiredKey } from './localization';
@@ -289,7 +290,9 @@ function normalizeParameters(paramValue: AgtkPluginParameterValue[], defaults: A
 
   for (let i = 0; i < defaults.length; i++) {
     const p = defaults[i];
-    normalized[p.id] = p.defaultValue as JsonValue;
+    normalized[p.id] = (
+      p.type === AgtkPluginUiParameterType.Json ? JSON.stringify(p.defaultValue) : p.defaultValue
+    ) as JsonValue;
   }
 
   for (let i = 0; i < paramValue.length; ++i) {

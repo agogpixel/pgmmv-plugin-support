@@ -349,6 +349,21 @@ describe('createPlugin', () => {
           expect(result[1]).toEqual(1);
           expect(result[2]).toEqual(2);
         });
+
+        it('ensures default JSON parameter values are stringified', () => {
+          const internal = {} as PluginProtectedApi;
+          createPlugin(
+            {
+              localizations: [],
+              parameters: [{ id: 1, name: 'test', type: AgtkPluginUiParameterType.Json, defaultValue: ['test'] }]
+            },
+            internal
+          );
+
+          const result = internal.normalizeUiParameters([]);
+          expect(Object.keys(result).length).toEqual(1);
+          expect(result[1]).toEqual('["test"]');
+        });
       });
     });
   });
